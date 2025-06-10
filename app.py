@@ -32,7 +32,7 @@ def add_trasaction():
 
 # Update operation
 @app.route('/edit/<int:transaction_id>')
-def edit_transaction():
+def edit_transaction(transaction_id):
     if request.method == 'POST':
         date = request.form['date']
         amount = request.form['amount']
@@ -54,6 +54,13 @@ def edit_transaction():
     return {'msg': 'Transaction toh hai hi nhi....ky hi edit karun??'}, 404
 
 # Delete operation
-
+@app.route('/delete/<int:transaction_id>')
+def delete_transaction(transaction_id):
+    for transaction in transactions:
+        if transaction['id'] == transaction_id:
+            transactions.remove(transaction)
+            break
+                
+    return redirect(url_for('get_transactions'))
 # Run the Flask app
     
