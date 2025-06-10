@@ -32,7 +32,26 @@ def add_trasaction():
 
 # Update operation
 @app.route('/edit/<int:transaction_id>')
-def edit_transaction()
+def edit_transaction():
+    if request.method == 'POST':
+        date = request.form['date']
+        amount = request.form['amount']
+
+        for transaction in transactions:
+            if transaction['id'] == transaction_id:
+                transaction['date'] = date
+                transaction['amount'] = amount
+                break
+            
+        return redirect(url_for("get_transactions"))
+
+
+    if request.method == 'GET':
+        for transaction in transactions:
+            if transaction['id'] == transaction_id:
+                return render_template('edit.html', transaction = transaction)
+
+    return {'msg': 'Transaction toh hai hi nhi....ky hi edit karun??'}, 404
 
 # Delete operation
 
